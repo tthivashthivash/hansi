@@ -3,51 +3,41 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Part 7 – Profile Page</title>
-<link rel="stylesheet" href="style.css">
+<title>Meesho Clone - Profile</title>
+<style>
+body { font-family: Arial, sans-serif; background:#f5f5f5; padding:20px; display:flex; justify-content:center; }
+.profile-container { background:white; padding:20px; border-radius:10px; width:350px; box-shadow:0 4px 8px rgba(0,0,0,0.1); }
+.profile-container h2 { text-align:center; margin-bottom:15px; }
+.profile-container label { display:block; margin-top:10px; }
+.profile-container input { width:100%; padding:8px; margin-top:5px; border-radius:5px; border:1px solid #ccc; }
+.profile-container button { margin-top:15px; width:100%; padding:10px; border:none; border-radius:5px; background: linear-gradient(135deg,#ff6a00,#ee0979); color:white; cursor:pointer; }
+.profile-container button:focus { outline:2px solid #000; }
+</style>
 </head>
 <body>
 
-<header>
-  <h1>Shop Developer Mode – Profile</h1>
-  <nav>
-    <a href="part1-home.html">Home</a>
-    <a href="part9-cart.html">Cart</a>
-    <a href="part8-wishlist.html">Wishlist</a>
-  </nav>
-</header>
+<div class="profile-container">
+  <h2>User Profile</h2>
+  <form id="profile-form">
+    <label for="user-name">Name</label>
+    <input type="text" id="user-name" placeholder="Your Name" required>
 
-<main>
-  <section aria-label="User Profile">
-    <h2>Your Profile</h2>
-    <div class="profile-info">
-      <p><strong>Name:</strong> John Doe</p>
-      <p><strong>Email:</strong> johndoe@example.com</p>
-      <p><strong>Phone:</strong> +91 9876543210</p>
-      <p><strong>Address:</strong> 123, Example Street, City, India</p>
-    </div>
+    <label for="user-email">Email</label>
+    <input type="email" id="user-email" placeholder="your@email.com" required>
 
-    <button onclick="editProfile()">Edit Profile</button>
-  </section>
+    <label for="user-phone">Phone</label>
+    <input type="tel" id="user-phone" placeholder="10-digit Mobile" pattern="[0-9]{10}" required>
 
-  <section aria-label="User Orders">
-    <h3>Your Recent Orders</h3>
-    <ul>
-      <li>Order #101 – Super Widget – ₹1500 – <a href="part6-order-success.html">View Details</a></li>
-      <li>Order #102 – Mega Gadget – ₹2000 – <a href="part6-order-success.html">View Details</a></li>
-    </ul>
-  </section>
-</main>
+    <button type="submit">Save Profile</button>
+  </form>
+</div>
 
-<footer>
-  <p>&copy; 2026 Shop Developer Mode. All rights reserved.</p>
-</footer>
-
-<script src="script.js"></script>
 <script>
-  function editProfile() {
-    alert("Profile edit feature coming soon!");
-  }
+const profileForm = document.getElementById('profile-form');
+profileForm.addEventListener('submit', e => {
+  e.preventDefault();
+  alert('Profile saved successfully!');
+});
 </script>
 
 </body>
