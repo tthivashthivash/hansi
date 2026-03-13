@@ -3,49 +3,60 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Meesho Clone - Order History</title>
+<title>Mini Meesho - Order History</title>
 <style>
-body { font-family: Arial, sans-serif; background:#f5f5f5; padding:20px; }
-h2 { text-align:center; margin-bottom:20px; }
-table { width:90%; margin:auto; border-collapse: collapse; }
-th, td { border:1px solid #ccc; padding:10px; text-align:center; }
-th { background:#6a11cb; color:white; }
-tr:nth-child(even) { background:#eee; }
+body { font-family: Arial, sans-serif; background:#f5f5f5; margin:0; padding:20px; }
+nav { background: linear-gradient(135deg,#6a11cb,#2575fc); padding:10px; display:flex; justify-content:space-around; position:sticky; top:0; }
+nav a { color:white; text-decoration:none; font-weight:600; font-size:0.9rem; }
+h2 { text-align:center; margin:15px 0; }
+.orders { max-width:700px; margin:auto; display:flex; flex-direction:column; gap:15px; }
+.order-card { background:white; padding:15px; border-radius:8px; box-shadow:0 2px 5px rgba(0,0,0,0.1); transition:transform 0.2s; }
+.order-card:hover { transform:scale(1.02); }
+.order-card p { margin:5px 0; }
 </style>
 </head>
 <body>
 
-<h2>Order History</h2>
-<table>
-  <thead>
-    <tr>
-      <th>Product</th>
-      <th>Payment</th>
-      <th>Status</th>
-      <th>Name</th>
-      <th>Phone</th>
-      <th>Address</th>
-    </tr>
-  </thead>
-  <tbody id="order-history">
-    <tr>
-      <td>Product 1</td>
-      <td>COD</td>
-      <td>Confirmed</td>
-      <td>John Doe</td>
-      <td>9876543210</td>
-      <td>123 Main Street, City</td>
-    </tr>
-    <tr>
-      <td>Product 2</td>
-      <td>UPI</td>
-      <td>Confirmed</td>
-      <td>Jane Smith</td>
-      <td>9123456780</td>
-      <td>456 Market Road, City</td>
-    </tr>
-  </tbody>
-</table>
+<nav>
+  <a href="part1_index.html">Home</a>
+  <a href="part10_order_history.html">My Orders</a>
+  <a href="part8_wishlist.html">Wishlist</a>
+  <a href="part7_profile.html">Profile</a>
+</nav>
+
+<h2>My Order History</h2>
+<div class="orders" id="orders-list">
+  <!-- Orders populated by JS -->
+</div>
+
+<script>
+// Get user info
+const user = JSON.parse(localStorage.getItem('user')||'{}');
+const username = user.username || '';
+
+// Get orders
+let orders = JSON.parse(localStorage.getItem('orders')||'[]');
+orders.reverse(); // latest first
+const ordersList = document.getElementById('orders-list');
+
+let hasOrders = false;
+orders.forEach(o=>{
+  if(o.user === username){
+    hasOrders = true;
+    const card = document.createElement('div');
+    card.className = 'order-card';
+    card.tabIndex = 0;
+    card.innerHTML = `
+      <p><strong>Product:</strong> ${o.product} | ₹${o.price}</p>
+      <p><strong>Category:</strong> ${o.category}</p>
+      <p><strong>Payment Method:</strong> ${o.method}</p>
+      <p><strong>Order Date:</strong> ${o.date}</p>
+    `;
+    ordersList.appendChild(card);
+  }
+});
+if(!hasOrders) ordersList.innerHTML='<p style="text-align:center;">No orders yet.</p>';
+</script>
 
 </body>
 </html>
