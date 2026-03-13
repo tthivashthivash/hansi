@@ -3,38 +3,38 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Part 2 – Login Page</title>
-<link rel="stylesheet" href="style.css">
+<title>Meesho Clone - Login</title>
+<style>
+body { font-family: Arial, sans-serif; background: linear-gradient(135deg,#6a11cb,#2575fc); color:white; display:flex; justify-content:center; align-items:center; height:100vh; }
+.login-container { background:white; color:black; padding:20px 30px; border-radius:10px; width:300px; box-shadow:0 4px 8px rgba(0,0,0,0.2); }
+.login-container h2 { text-align:center; margin-bottom:15px; }
+.login-container label { display:block; margin-top:10px; }
+.login-container input { width:100%; padding:8px; margin-top:5px; border-radius:5px; border:1px solid #ccc; }
+.login-container button { width:100%; padding:10px; margin-top:15px; border:none; border-radius:5px; background: linear-gradient(135deg,#ff6a00,#ee0979); color:white; cursor:pointer; }
+.login-container button:focus { outline:2px solid #000; }
+</style>
 </head>
 <body>
+<div class="login-container">
+  <h2>Login</h2>
+  <form id="login-form">
+    <label for="username">Username</label>
+    <input type="text" id="username" required placeholder="Enter Username">
+    <label for="password">Password</label>
+    <input type="password" id="password" required placeholder="Enter Password">
+    <button type="submit">Login</button>
+  </form>
+</div>
 
-<header>
-  <h1>Shop Developer Mode – Login</h1>
-  <nav>
-    <a href="part1-home.html">Home</a>
-  </nav>
-</header>
-
-<main>
-  <section aria-label="Login Form">
-    <h2>Login</h2>
-    <form action="part1-home.html" method="get">
-      <label for="username">Username or Email:</label>
-      <input type="text" id="username" name="username" required aria-required="true">
-
-      <label for="password">Password:</label>
-      <input type="password" id="password" name="password" required aria-required="true">
-
-      <button type="submit">Login</button>
-    </form>
-    <p>Don't have an account? <a href="#">Sign up</a></p>
-  </section>
-</main>
-
-<footer>
-  <p>&copy; 2026 Shop Developer Mode. All rights reserved.</p>
-</footer>
-
-<script src="script.js"></script>
+<script>
+const loginForm = document.getElementById('login-form');
+loginForm.addEventListener('submit', e => {
+  e.preventDefault();
+  // Simple login simulation
+  alert('Login Successful!');
+  // Redirect to Home / Part1 page
+  window.location.href = 'part1_index.html';
+});
+</script>
 </body>
 </html>
