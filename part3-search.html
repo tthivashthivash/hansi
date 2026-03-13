@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Part 3 – Search Page</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header>
+  <h1>Shop Developer Mode – Search</h1>
+  <nav>
+    <a href="part1-home.html">Home</a>
+    <a href="part2-login.html">Login</a>
+  </nav>
+</header>
+
+<main>
+  <section aria-label="Search Products">
+    <h2>Search Products</h2>
+    <form id="searchForm">
+      <label for="searchInput">Enter product name:</label>
+      <input type="text" id="searchInput" name="searchInput" placeholder="Search..." required aria-required="true">
+      <button type="submit">Search</button>
+    </form>
+
+    <div id="searchResults" aria-live="polite">
+      <!-- Search results will appear here -->
+      <p>No results yet. Start typing to search products.</p>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <p>&copy; 2026 Shop Developer Mode. All rights reserved.</p>
+</footer>
+
+<script src="script.js"></script>
+<script>
+  // Simple JS to simulate search
+  const searchForm = document.getElementById('searchForm');
+  const searchResults = document.getElementById('searchResults');
+
+  searchForm.addEventListener('submit', function(e) {
+    e.preventDefault();
+    const query = document.getElementById('searchInput').value.trim();
+    if(query) {
+      searchResults.innerHTML = `
+        <h3>Results for "${query}"</h3>
+        <ul>
+          <li><a href="part4-product.html">Product 1</a></li>
+          <li><a href="part4-product.html">Product 2</a></li>
+        </ul>
+      `;
+    } else {
+      searchResults.innerHTML = <p>No results found.</p>;
+    }
+  });
+</script>
+
+</body>
+</html>

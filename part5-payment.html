@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Part 5 – Payment / Checkout</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header>
+  <h1>Shop Developer Mode – Checkout</h1>
+  <nav>
+    <a href="part1-home.html">Home</a>
+    <a href="part9-cart.html">Cart</a>
+  </nav>
+</header>
+
+<main>
+  <section aria-label="Order Summary">
+    <h2>Order Summary</h2>
+    <ul>
+      <li>Product: Super Widget – Qty: 2 – Price: ₹3000</li>
+      <li>Shipping: ₹100</li>
+      <li>Total: ₹3100</li>
+    </ul>
+  </section>
+
+  <section aria-label="Payment Options">
+    <h2>Select Payment Method</h2>
+    <form id="paymentForm" action="part6-order-success.html" method="get">
+      <fieldset>
+        <legend>Payment Options</legend>
+
+        <label>
+          <input type="radio" name="payment" value="cod" required aria-required="true">
+          Cash on Delivery
+        </label><br>
+
+        <label>
+          <input type="radio" name="payment" value="upi">
+          UPI / Wallet
+        </label><br>
+
+        <label>
+          <input type="radio" name="payment" value="card">
+          Credit / Debit Card
+        </label><br>
+      </fieldset>
+
+      <button type="submit">Place Order</button>
+    </form>
+  </section>
+</main>
+
+<footer>
+  <p>&copy; 2026 Shop Developer Mode. All rights reserved.</p>
+</footer>
+
+<script src="script.js"></script>
+<script>
+  // Simple JS to prevent submit without selecting payment
+  const paymentForm = document.getElementById('paymentForm');
+  paymentForm.addEventListener('submit', function(e) {
+    const selected = document.querySelector('input[name="payment"]:checked');
+    if (!selected) {
+      e.preventDefault();
+      alert('Please select a payment method!');
+    }
+  });
+</script>
+</body>
+</html>

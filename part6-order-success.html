@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Part 6 – Order Success</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header>
+  <h1>Shop Developer Mode – Order Placed</h1>
+  <nav>
+    <a href="part1-home.html">Home</a>
+    <a href="part10-order-history.html">Order History</a>
+  </nav>
+</header>
+
+<main>
+  <section aria-label="Order Confirmation">
+    <h2>Thank You!</h2>
+    <p>Your order has been placed successfully.</p>
+
+    <!-- Simple Animation Example -->
+    <div class="scooter-animation" aria-hidden="true">
+      <img src="assets/icons/scooter.png" alt="Delivery scooter animation">
+      <p>On its way 🚀</p>
+    </div>
+
+    <p>You can check your order in <a href="part10-order-history.html">Order History</a>.</p>
+    <p><a href="part1-home.html">Back to Home</a></p>
+  </section>
+</main>
+
+<footer>
+  <p>&copy; 2026 Shop Developer Mode. All rights reserved.</p>
+</footer>
+
+<script src="script.js"></script>
+<script>
+  // Example: simple animation fade-in
+  document.addEventListener('DOMContentLoaded', () => {
+    const scooter = document.querySelector('.scooter-animation');
+    scooter.style.opacity = 0;
+    setTimeout(() => { scooter.style.transition = 'opacity 1.5s'; scooter.style.opacity = 1; }, 100);
+  });
+</script>
+
+</body>
+</html>

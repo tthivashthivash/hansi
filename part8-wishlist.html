@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Part 8 – Wishlist</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header>
+  <h1>Shop Developer Mode – Wishlist</h1>
+  <nav>
+    <a href="part1-home.html">Home</a>
+    <a href="part7-profile.html">Profile</a>
+    <a href="part9-cart.html">Cart</a>
+  </nav>
+</header>
+
+<main>
+  <section aria-label="User Wishlist">
+    <h2>Your Wishlist</h2>
+    <ul>
+      <li>
+        Super Widget – ₹1500
+        <button onclick="moveToCart('Super Widget')">Add to Cart</button>
+        <button onclick="removeFromWishlist('Super Widget')">Remove</button>
+      </li>
+      <li>
+        Mega Gadget – ₹2000
+        <button onclick="moveToCart('Mega Gadget')">Add to Cart</button>
+        <button onclick="removeFromWishlist('Mega Gadget')">Remove</button>
+      </li>
+      <li>
+        Ultra Device – ₹2500
+        <button onclick="moveToCart('Ultra Device')">Add to Cart</button>
+        <button onclick="removeFromWishlist('Ultra Device')">Remove</button>
+      </li>
+    </ul>
+  </section>
+</main>
+
+<footer>
+  <p>&copy; 2026 Shop Developer Mode. All rights reserved.</p>
+</footer>
+
+<script src="script.js"></script>
+<script>
+  function moveToCart(productName) {
+    alert(${productName} moved to cart!);
+  }
+
+  function removeFromWishlist(productName) {
+    alert(${productName} removed from wishlist!);
+  }
+</script>
+
+</body>
+</html>
