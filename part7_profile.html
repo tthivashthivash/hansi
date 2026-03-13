@@ -3,41 +3,65 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Meesho Clone - Profile</title>
+<title>Mini Meesho - Profile</title>
 <style>
-body { font-family: Arial, sans-serif; background:#f5f5f5; padding:20px; display:flex; justify-content:center; }
-.profile-container { background:white; padding:20px; border-radius:10px; width:350px; box-shadow:0 4px 8px rgba(0,0,0,0.1); }
-.profile-container h2 { text-align:center; margin-bottom:15px; }
-.profile-container label { display:block; margin-top:10px; }
-.profile-container input { width:100%; padding:8px; margin-top:5px; border-radius:5px; border:1px solid #ccc; }
-.profile-container button { margin-top:15px; width:100%; padding:10px; border:none; border-radius:5px; background: linear-gradient(135deg,#ff6a00,#ee0979); color:white; cursor:pointer; }
-.profile-container button:focus { outline:2px solid #000; }
+body { font-family: Arial, sans-serif; background:#f5f5f5; margin:0; padding:20px; }
+nav { background: linear-gradient(135deg,#6a11cb,#2575fc); padding:10px; display:flex; justify-content:space-around; position:sticky; top:0; }
+nav a { color:white; text-decoration:none; font-weight:600; font-size:0.9rem; }
+.profile-container { max-width:700px; margin:auto; background:white; padding:20px; border-radius:10px; box-shadow:0 4px 8px rgba(0,0,0,0.15); }
+.profile-container h2 { margin-bottom:15px; text-align:center; }
+.profile-container p { margin-bottom:8px; }
+.orders { margin-top:20px; }
+.order-card { background:#f9f9f9; padding:10px; margin-bottom:10px; border-radius:8px; box-shadow:0 2px 5px rgba(0,0,0,0.1); }
 </style>
 </head>
 <body>
 
+<nav>
+  <a href="part1_index.html">Home</a>
+  <a href="part10_order_history.html">My Orders</a>
+  <a href="part8_wishlist.html">Wishlist</a>
+  <a href="part7_profile.html">Profile</a>
+</nav>
+
 <div class="profile-container">
   <h2>User Profile</h2>
-  <form id="profile-form">
-    <label for="user-name">Name</label>
-    <input type="text" id="user-name" placeholder="Your Name" required>
+  <p><strong>Name:</strong> <span id="user-name">-</span></p>
+  <p><strong>Phone:</strong> <span id="user-phone">-</span></p>
+  <p><strong>Address:</strong> <span id="user-address">-</span></p>
 
-    <label for="user-email">Email</label>
-    <input type="email" id="user-email" placeholder="your@email.com" required>
-
-    <label for="user-phone">Phone</label>
-    <input type="tel" id="user-phone" placeholder="10-digit Mobile" pattern="[0-9]{10}" required>
-
-    <button type="submit">Save Profile</button>
-  </form>
+  <div class="orders">
+    <h3>Past Orders</h3>
+    <div id="orders-list">
+      <!-- Orders populated by JS -->
+    </div>
+  </div>
 </div>
 
 <script>
-const profileForm = document.getElementById('profile-form');
-profileForm.addEventListener('submit', e => {
-  e.preventDefault();
-  alert('Profile saved successfully!');
+// Get user info
+const user = JSON.parse(localStorage.getItem('user')||'{}');
+document.getElementById('user-name').innerText = user.username || '-';
+document.getElementById('user-phone').innerText = user.phone || '-';
+document.getElementById('user-address').innerText = user.address || '-';
+
+// Get orders
+let orders = JSON.parse(localStorage.getItem('orders')||'[]');
+const ordersList = document.getElementById('orders-list');
+orders.reverse().forEach(o=>{
+  if(o.user === (user.username || '')){
+    const card = document.createElement('div');
+    card.className = 'order-card';
+    card.innerHTML = `
+      <p><strong>Product:</strong> ${o.product} | ₹${o.price}</p>
+      <p><strong>Category:</strong> ${o.category}</p>
+      <p><strong>Payment:</strong> ${o.method}</p>
+      <p><strong>Date:</strong> ${o.date}</p>
+    `;
+    ordersList.appendChild(card);
+  }
 });
+if(ordersList.innerHTML==='') ordersList.innerHTML='<p>No past orders yet.</p>';
 </script>
 
 </body>
