@@ -3,34 +3,47 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Meesho Clone - Product</title>
+<title>Meesho Clone - Product Details</title>
 <style>
-body { font-family: Arial, sans-serif; background:#f5f5f5; padding:20px; }
-.product-container { max-width:600px; margin:auto; background:white; padding:20px; border-radius:10px; box-shadow:0 4px 8px rgba(0,0,0,0.1); }
+body { font-family: Arial, sans-serif; background:#f5f5f5; padding:20px; display:flex; justify-content:center; }
+.product-container { background:white; padding:25px; border-radius:10px; width:350px; box-shadow:0 4px 8px rgba(0,0,0,0.15); text-align:center; }
 .product-container img { width:100%; border-radius:8px; }
 .product-container h2 { margin:15px 0 10px; }
 .product-container p { margin-bottom:10px; }
-button { padding:10px; border:none; border-radius:5px; background: linear-gradient(135deg,#ff6a00,#ee0979); color:white; cursor:pointer; }
+button { padding:12px 20px; border:none; border-radius:5px; background: linear-gradient(135deg,#ff6a00,#ee0979); color:white; cursor:pointer; font-weight:600; transition:0.3s; }
+button:hover { transform:scale(1.05); }
 button:focus { outline:2px solid #000; }
 </style>
 </head>
 <body>
 
 <div class="product-container">
-  <img src="https://via.placeholder.com/400x300" alt="Product Image">
-  <h2>Product Name</h2>
-  <p>Category: Example Category</p>
-  <p>Price: ₹499</p>
-  <p>Description: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse vitae.</p>
-  <button id="add-to-cart">Add to Cart</button>
+  <img id="product-img" src="https://via.placeholder.com/400x300" alt="Product Image">
+  <h2 id="product-name">Product Name</h2>
+  <p>Category: <span id="product-category">Example Category</span></p>
+  <p>Price: ₹<span id="product-price">499</span></p>
+  <p id="product-desc">This is a short description of the product. Stylish, high-quality, and affordable!</p>
+  <button id="buy-now">Buy Now</button>
 </div>
 
 <script>
-const addToCartBtn = document.getElementById('add-to-cart');
-addToCartBtn.addEventListener('click', () => {
-  alert('Product added to cart!');
+// Get product info from query params
+const params = new URLSearchParams(window.location.search);
+const name = params.get('name') || 'Product Name';
+const price = params.get('price') || '499';
+const category = params.get('category') || 'Example Category';
+
+document.getElementById('product-name').innerText = name;
+document.getElementById('product-price').innerText = price;
+document.getElementById('product-category').innerText = category;
+
+// Buy Now → Payment Page
+document.getElementById('buy-now').addEventListener('click', () => {
+  // Pass product name & price to payment page via query params
+  const paymentUrl = `part5_payment.html?name=${encodeURIComponent(name)}&price=${price}`;
+  window.location.href = paymentUrl;
 });
 </script>
 
 </body>
-</html>>
+</html>
