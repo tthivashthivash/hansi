@@ -8,103 +8,39 @@
 <style>
 * { margin:0; padding:0; box-sizing:border-box; }
 body { font-family: Arial, sans-serif; background:#f5f5f5; }
-nav { display:flex; justify-content:space-between; background: linear-gradient(135deg,#6a11cb,#2575fc); color:white; padding:15px 20px; }
-nav h1 { font-size:1.5rem; }
-nav ul { display:flex; gap:15px; list-style:none; }
-nav button { background:transparent; border:none; color:white; font-size:1rem; cursor:pointer; }
-section { display:none; padding:20px; min-height:80vh; }
-section.active { display:block; }
-.products { display:grid; grid-template-columns:repeat(auto-fill,minmax(180px,1fr)); gap:15px; }
-.product-card { background:white; padding:10px; border-radius:8px; box-shadow:0 2px 5px rgba(0,0,0,0.1); display:flex; flex-direction:column; align-items:center; transition:transform 0.2s; }
+.products { display:grid; grid-template-columns:repeat(auto-fill,minmax(180px,1fr)); gap:15px; padding:20px; }
+.product-card { background:white; padding:10px; border-radius:8px; box-shadow:0 2px 5px rgba(0,0,0,0.1); display:flex; flex-direction:column; align-items:center; transition:transform 0.2s; cursor:pointer; }
 .product-card:hover { transform:scale(1.05); }
 .product-card img { width:100%; border-radius:8px; }
 .product-card button { margin-top:10px; padding:8px 10px; border:none; border-radius:5px; background: linear-gradient(135deg,#ff6a00,#ee0979); color:white; cursor:pointer; }
 </style>
 </head>
 <body>
-<nav>
-  <h1>Meesho Clone</h1>
-  <ul>
-    <li><button data-target="products">Products</button></li>
-    <li><button data-target="orders">Orders</button></li>
-    <li><button data-target="settings">Settings</button></li>
-  </ul>
-</nav>
 
-<section id="products" class="active">
-  <h2>Products</h2>
-  <div class="products">
-    <div class="product-card" tabindex="0">
-      <img src="https://via.placeholder.com/150" alt="Product 1">
-      <p>Product 1</p>
-      <button class="order-btn">Order Now</button>
-    </div>
-    <div class="product-card" tabindex="0">
-      <img src="https://via.placeholder.com/150" alt="Product 2">
-      <p>Product 2</p>
-      <button class="order-btn">Order Now</button>
-    </div>
-    <div class="product-card" tabindex="0">
-      <img src="https://via.placeholder.com/150" alt="Product 3">
-      <p>Product 3</p>
-      <button class="order-btn">Order Now</button>
-    </div>
+<h2 style="text-align:center; margin:20px 0;">Welcome to Meesho Clone</h2>
+
+<div class="products">
+  <div class="product-card" onclick="openProduct('Product 1','499','Example Category')">
+    <img src="https://via.placeholder.com/150" alt="Product 1">
+    <p>Product 1</p>
   </div>
-</section>
-
-<section id="orders">
-  <h2>My Orders</h2>
-  <table>
-    <thead>
-      <tr><th>Product</th><th>Payment</th><th>Status</th><th>Name</th><th>Phone</th><th>Address</th></tr>
-    </thead>
-    <tbody id="orders-list"></tbody>
-  </table>
-</section>
-
-<section id="settings">
-  <h2>Settings</h2>
-  <p>Profile settings, notifications, payment methods, etc.</p>
-</section>
-
-<div class="modal" id="checkout-modal">
-  <div class="modal-content">
-    <h3>Place Your Order</h3>
-    <form id="checkout-form">
-      <label for="cust-name">Name</label>
-      <input type="text" id="cust-name" required placeholder="Your Name">
-      <label for="cust-phone">Phone</label>
-      <input type="tel" id="cust-phone" required placeholder="10-digit Mobile" pattern="[0-9]{10}">
-      <label for="cust-address">Address</label>
-      <textarea id="cust-address" required placeholder="Full Address"></textarea>
-      <label for="payment">Payment Method</label>
-      <select id="payment" required>
-        <option value="">Select Payment</option>
-        <option value="COD">Cash on Delivery</option>
-        <option value="UPI">UPI</option>
-        <option value="Card">Card</option>
-      </select>
-      <button type="submit">Confirm Order</button>
-      <button type="button" id="close-modal">Cancel</button>
-    </form>
+  <div class="product-card" onclick="openProduct('Product 2','299','Example Category')">
+    <img src="https://via.placeholder.com/150" alt="Product 2">
+    <p>Product 2</p>
+  </div>
+  <div class="product-card" onclick="openProduct('Product 3','399','Example Category')">
+    <img src="https://via.placeholder.com/150" alt="Product 3">
+    <p>Product 3</p>
   </div>
 </div>
 
 <script>
-const navButtons = document.querySelectorAll('nav button');
-const sections = document.querySelectorAll('section');
-navButtons.forEach(btn=>btn.addEventListener('click',()=>{sections.forEach(s=>s.classList.remove('active'));document.getElementById(btn.getAttribute('data-target')).classList.add('active');}));
-
-const orderButtons = document.querySelectorAll('.order-btn');
-const modal = document.getElementById('checkout-modal');
-let currentProduct = '';
-orderButtons.forEach(btn=>btn.addEventListener('click',e=>{currentProduct=e.target.parentElement.querySelector('p').innerText;modal.style.display='flex';document.getElementById('cust-name').focus();}));
-
-const checkoutForm=document.getElementById('checkout-form');
-checkoutForm.addEventListener('submit',e=>{e.preventDefault();const name=document.getElementById('cust-name').value;const phone=document.getElementById('cust-phone').value;const address=document.getElementById('cust-address').value;const payment=document.getElementById('payment').value;const tr=document.createElement('tr');tr.innerHTML=`<td>${currentProduct}</td><td>${payment}</td><td>Confirmed</td><td>${name}</td><td>${phone}</td><td>${address}</td>`;document.getElementById('orders-list').appendChild(tr);checkoutForm.reset();modal.style.display='none';sections.forEach(s=>s.classList.remove('active'));document.getElementById('orders').classList.add('active');});
-
-document.getElementById('close-modal').addEventListener('click',()=>{modal.style.display='none';});
-document.addEventListener('keydown',e=>{if(e.key==='Escape') modal.style.display='none';});
+// Product click → redirect to product details with query params
+function openProduct(name, price, category){
+  const url = `part4_product.html?name=${encodeURIComponent(name)}&price=${price}&category=${encodeURIComponent(category)}`;
+  window.location.href = url;
+}
 </script>
+
 </body>
 </html>
