@@ -3,56 +3,48 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Part 8 – Wishlist</title>
-<link rel="stylesheet" href="style.css">
+<title>Meesho Clone - Wishlist</title>
+<style>
+body { font-family: Arial, sans-serif; background:#f5f5f5; padding:20px; }
+h2 { text-align:center; margin-bottom:20px; }
+.wishlist { display:grid; grid-template-columns:repeat(auto-fill,minmax(180px,1fr)); gap:15px; max-width:1000px; margin:auto; }
+.wishlist-card { background:white; padding:10px; border-radius:8px; box-shadow:0 2px 5px rgba(0,0,0,0.1); text-align:center; transition:transform 0.2s; }
+.wishlist-card:hover { transform:scale(1.05); }
+.wishlist-card img { width:100%; border-radius:5px; }
+.wishlist-card button { margin-top:10px; padding:8px 10px; border:none; border-radius:5px; background: linear-gradient(135deg,#ff6a00,#ee0979); color:white; cursor:pointer; }
+.wishlist-card button:focus { outline:2px solid #000; }
+</style>
 </head>
 <body>
 
-<header>
-  <h1>Shop Developer Mode – Wishlist</h1>
-  <nav>
-    <a href="part1-home.html">Home</a>
-    <a href="part7-profile.html">Profile</a>
-    <a href="part9-cart.html">Cart</a>
-  </nav>
-</header>
+<h2>My Wishlist</h2>
+<div class="wishlist" id="wishlist-list">
+  <div class="wishlist-card" tabindex="0">
+    <img src="https://via.placeholder.com/150" alt="Wishlist Product 1">
+    <p>Wishlist Product 1</p>
+    <button class="remove-btn">Remove</button>
+  </div>
+  <div class="wishlist-card" tabindex="0">
+    <img src="https://via.placeholder.com/150" alt="Wishlist Product 2">
+    <p>Wishlist Product 2</p>
+    <button class="remove-btn">Remove</button>
+  </div>
+  <div class="wishlist-card" tabindex="0">
+    <img src="https://via.placeholder.com/150" alt="Wishlist Product 3">
+    <p>Wishlist Product 3</p>
+    <button class="remove-btn">Remove</button>
+  </div>
+</div>
 
-<main>
-  <section aria-label="User Wishlist">
-    <h2>Your Wishlist</h2>
-    <ul>
-      <li>
-        Super Widget – ₹1500
-        <button onclick="moveToCart('Super Widget')">Add to Cart</button>
-        <button onclick="removeFromWishlist('Super Widget')">Remove</button>
-      </li>
-      <li>
-        Mega Gadget – ₹2000
-        <button onclick="moveToCart('Mega Gadget')">Add to Cart</button>
-        <button onclick="removeFromWishlist('Mega Gadget')">Remove</button>
-      </li>
-      <li>
-        Ultra Device – ₹2500
-        <button onclick="moveToCart('Ultra Device')">Add to Cart</button>
-        <button onclick="removeFromWishlist('Ultra Device')">Remove</button>
-      </li>
-    </ul>
-  </section>
-</main>
-
-<footer>
-  <p>&copy; 2026 Shop Developer Mode. All rights reserved.</p>
-</footer>
-
-<script src="script.js"></script>
 <script>
-  function moveToCart(productName) {
-    alert(${productName} moved to cart!);
-  }
-
-  function removeFromWishlist(productName) {
-    alert(${productName} removed from wishlist!);
-  }
+const removeButtons = document.querySelectorAll('.remove-btn');
+removeButtons.forEach(btn => {
+  btn.addEventListener('click', e => {
+    const card = e.target.parentElement;
+    card.remove();
+    alert('Removed from wishlist!');
+  });
+});
 </script>
 
 </body>
