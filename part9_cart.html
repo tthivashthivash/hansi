@@ -3,62 +3,80 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Part 9 – Cart Page</title>
-<link rel="stylesheet" href="style.css">
+<title>Meesho Clone - Cart</title>
+<style>
+body { font-family: Arial, sans-serif; background:#f5f5f5; padding:20px; }
+h2 { text-align:center; margin-bottom:20px; }
+.cart { max-width:800px; margin:auto; border-collapse: collapse; width:100%; }
+.cart th, .cart td { border:1px solid #ccc; padding:10px; text-align:center; }
+.cart th { background:#6a11cb; color:white; }
+button { padding:6px 10px; border:none; border-radius:5px; background: linear-gradient(135deg,#ff6a00,#ee0979); color:white; cursor:pointer; }
+button:focus { outline:2px solid #000; }
+input[type=number] { width:50px; padding:5px; border-radius:5px; border:1px solid #ccc; }
+</style>
 </head>
 <body>
 
-<header>
-  <h1>Shop Developer Mode – Cart</h1>
-  <nav>
-    <a href="part1-home.html">Home</a>
-    <a href="part7-profile.html">Profile</a>
-    <a href="part8-wishlist.html">Wishlist</a>
-  </nav>
-</header>
+<h2>My Cart</h2>
+<table class="cart">
+  <thead>
+    <tr>
+      <th>Product</th>
+      <th>Price (₹)</th>
+      <th>Qty</th>
+      <th>Total (₹)</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+  <tbody id="cart-list">
+    <tr>
+      <td>Product 1</td>
+      <td>499</td>
+      <td><input type="number" value="1" min="1" class="qty"></td>
+      <td class="total">499</td>
+      <td><button class="remove">Remove</button></td>
+    </tr>
+    <tr>
+      <td>Product 2</td>
+      <td>299</td>
+      <td><input type="number" value="1" min="1" class="qty"></td>
+      <td class="total">299</td>
+      <td><button class="remove">Remove</button></td>
+    </tr>
+  </tbody>
+</table>
 
-<main>
-  <section aria-label="Shopping Cart">
-    <h2>Your Cart</h2>
-    <table>
-      <thead>
-        <tr>
-          <th>Product</th>
-          <th>Quantity</th>
-          <th>Price</th>
-          <th>Action</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>Super Widget</td>
-          <td><input type="number" value="2" min="1" aria-label="Quantity for Super Widget"></td>
-          <td>₹3000</td>
-          <td><button onclick="removeFromCart('Super Widget')">Remove</button></td>
-        </tr>
-        <tr>
-          <td>Mega Gadget</td>
-          <td><input type="number" value="1" min="1" aria-label="Quantity for Mega Gadget"></td>
-          <td>₹2000</td>
-          <td><button onclick="removeFromCart('Mega Gadget')">Remove</button></td>
-        </tr>
-      </tbody>
-    </table>
+<div style="text-align:center; margin-top:20px;">
+  <button id="checkout">Checkout</button>
+</div>
 
-    <p>Total: ₹5000</p>
-    <a href="part5-payment.html"><button>Proceed to Payment</button></a>
-  </section>
-</main>
-
-<footer>
-  <p>&copy; 2026 Shop Developer Mode. All rights reserved.</p>
-</footer>
-
-<script src="script.js"></script>
 <script>
-  function removeFromCart(productName) {
-    alert(${productName} removed from cart!);
-  }
+function updateTotal(row) {
+  const price = parseInt(row.children[1].innerText);
+  const qty = parseInt(row.querySelector('.qty').value);
+  row.querySelector('.total').innerText = price * qty;
+}
+
+const qtyInputs = document.querySelectorAll('.qty');
+qtyInputs.forEach(input => {
+  input.addEventListener('input', e => {
+    const row = e.target.parentElement.parentElement;
+    updateTotal(row);
+  });
+});
+
+const removeButtons = document.querySelectorAll('.remove');
+removeButtons.forEach(btn => {
+  btn.addEventListener('click', e => {
+    e.target.parentElement.parentElement.remove();
+    alert('Item removed from cart!');
+  });
+});
+
+document.getElementById('checkout').addEventListener('click', () => {
+  alert('Proceeding to payment...');
+  window.location.href = 'part5_payment.html';
+});
 </script>
 
 </body>
