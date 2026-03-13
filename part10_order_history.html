@@ -3,41 +3,49 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Part 10 – Order History</title>
-<link rel="stylesheet" href="style.css">
+<title>Meesho Clone - Order History</title>
+<style>
+body { font-family: Arial, sans-serif; background:#f5f5f5; padding:20px; }
+h2 { text-align:center; margin-bottom:20px; }
+table { width:90%; margin:auto; border-collapse: collapse; }
+th, td { border:1px solid #ccc; padding:10px; text-align:center; }
+th { background:#6a11cb; color:white; }
+tr:nth-child(even) { background:#eee; }
+</style>
 </head>
 <body>
 
-<header>
-  <h1>Shop Developer Mode – Order History</h1>
-  <nav>
-    <a href="part1-home.html">Home</a>
-    <a href="part7-profile.html">Profile</a>
-    <a href="part9-cart.html">Cart</a>
-  </nav>
-</header>
+<h2>Order History</h2>
+<table>
+  <thead>
+    <tr>
+      <th>Product</th>
+      <th>Payment</th>
+      <th>Status</th>
+      <th>Name</th>
+      <th>Phone</th>
+      <th>Address</th>
+    </tr>
+  </thead>
+  <tbody id="order-history">
+    <tr>
+      <td>Product 1</td>
+      <td>COD</td>
+      <td>Confirmed</td>
+      <td>John Doe</td>
+      <td>9876543210</td>
+      <td>123 Main Street, City</td>
+    </tr>
+    <tr>
+      <td>Product 2</td>
+      <td>UPI</td>
+      <td>Confirmed</td>
+      <td>Jane Smith</td>
+      <td>9123456780</td>
+      <td>456 Market Road, City</td>
+    </tr>
+  </tbody>
+</table>
 
-<main>
-  <section aria-label="User Order History">
-    <h2>Your Orders</h2>
-    <ul>
-      <li>
-        <strong>Order #101</strong> – Super Widget – ₹1500 – <a href="part6-order-success.html">View Details</a>
-      </li>
-      <li>
-        <strong>Order #102</strong> – Mega Gadget – ₹2000 – <a href="part6-order-success.html">View Details</a>
-      </li>
-      <li>
-        <strong>Order #103</strong> – Ultra Device – ₹2500 – <a href="part6-order-success.html">View Details</a>
-      </li>
-    </ul>
-  </section>
-</main>
-
-<footer>
-  <p>&copy; 2026 Shop Developer Mode. All rights reserved.</p>
-</footer>
-
-<script src="script.js"></script>
 </body>
 </html>
