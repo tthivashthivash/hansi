@@ -3,80 +3,91 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Meesho Clone - Cart</title>
+<title>Mini Meesho - Cart</title>
 <style>
-body { font-family: Arial, sans-serif; background:#f5f5f5; padding:20px; }
-h2 { text-align:center; margin-bottom:20px; }
-.cart { max-width:800px; margin:auto; border-collapse: collapse; width:100%; }
-.cart th, .cart td { border:1px solid #ccc; padding:10px; text-align:center; }
-.cart th { background:#6a11cb; color:white; }
-button { padding:6px 10px; border:none; border-radius:5px; background: linear-gradient(135deg,#ff6a00,#ee0979); color:white; cursor:pointer; }
-button:focus { outline:2px solid #000; }
-input[type=number] { width:50px; padding:5px; border-radius:5px; border:1px solid #ccc; }
+body { font-family: Arial, sans-serif; background:#f5f5f5; margin:0; padding:20px; }
+nav { background: linear-gradient(135deg,#6a11cb,#2575fc); padding:10px; display:flex; justify-content:space-around; position:sticky; top:0; }
+nav a { color:white; text-decoration:none; font-weight:600; font-size:0.9rem; }
+h2 { text-align:center; margin:15px 0; }
+.cart { max-width:800px; margin:auto; display:flex; flex-direction:column; gap:15px; }
+.cart-item { background:white; display:flex; gap:10px; padding:10px; border-radius:8px; box-shadow:0 2px 5px rgba(0,0,0,0.1); align-items:center; }
+.cart-item img { width:100px; border-radius:8px; }
+.cart-item-details { flex:1; display:flex; flex-direction:column; }
+.cart-item-details p { margin:3px 0; }
+.cart-item button { padding:6px 10px; border:none; border-radius:5px; background: linear-gradient(135deg,#ff6a00,#ee0979); color:white; cursor:pointer; font-weight:600; margin-top:5px; }
+.cart-item button:focus { outline:2px solid #000; }
+#checkout { padding:12px 20px; border:none; border-radius:5px; background: linear-gradient(135deg,#ff6a00,#ee0979); color:white; cursor:pointer; font-weight:600; margin-top:15px; width:100%; }
+#checkout:hover { transform:scale(1.02); }
+#checkout:focus { outline:2px solid #000; }
+input.qty { width:50px; padding:4px; text-align:center; border-radius:5px; border:1px solid #ccc; }
 </style>
 </head>
 <body>
 
-<h2>My Cart</h2>
-<table class="cart">
-  <thead>
-    <tr>
-      <th>Product</th>
-      <th>Price (₹)</th>
-      <th>Qty</th>
-      <th>Total (₹)</th>
-      <th>Action</th>
-    </tr>
-  </thead>
-  <tbody id="cart-list">
-    <tr>
-      <td>Product 1</td>
-      <td>499</td>
-      <td><input type="number" value="1" min="1" class="qty"></td>
-      <td class="total">499</td>
-      <td><button class="remove">Remove</button></td>
-    </tr>
-    <tr>
-      <td>Product 2</td>
-      <td>299</td>
-      <td><input type="number" value="1" min="1" class="qty"></td>
-      <td class="total">299</td>
-      <td><button class="remove">Remove</button></td>
-    </tr>
-  </tbody>
-</table>
+<nav>
+  <a href="part1_index.html">Home</a>
+  <a href="part10_order_history.html">My Orders</a>
+  <a href="part8_wishlist.html">Wishlist</a>
+  <a href="part7_profile.html">Profile</a>
+</nav>
 
-<div style="text-align:center; margin-top:20px;">
-  <button id="checkout">Checkout</button>
+<h2>My Cart</h2>
+<div class="cart" id="cart-list">
+  <!-- Cart items -->
 </div>
+<button id="checkout">Proceed to Payment</button>
 
 <script>
-function updateTotal(row) {
-  const price = parseInt(row.children[1].innerText);
-  const qty = parseInt(row.querySelector('.qty').value);
-  row.querySelector('.total').innerText = price * qty;
+// Get cart from localStorage
+let cart = JSON.parse(localStorage.getItem('cart')||'[]');
+const cartList = document.getElementById('cart-list');
+
+function renderCart(){
+  cartList.innerHTML = '';
+  if(cart.length === 0){
+    cartList.innerHTML = '<p style="text-align:center;">Your cart is empty.</p>';
+    document.getElementById('checkout').disabled = true;
+    return;
+  }
+  document.getElementById('checkout').disabled = false;
+
+  cart.forEach((item,i)=>{
+    const div = document.createElement('div');
+    div.className = 'cart-item';
+    div.tabIndex = 0;
+    div.innerHTML = `
+      <img src="${item.img || 'https://via.placeholder.com/100'}" alt="${item.name}">
+      <div class="cart-item-details">
+        <p><strong>${item.name}</strong></p>
+        <p>₹${item.price}</p>
+        <label>Qty: <input type="number" class="qty" value="${item.qty||1}" min="1"></label>
+        <button class="remove">Remove</button>
+      </div>
+    `;
+    div.querySelector('.remove').addEventListener('click', ()=>{
+      cart.splice(i,1);
+      localStorage.setItem('cart', JSON.stringify(cart));
+      renderCart();
+    });
+    div.querySelector('.qty').addEventListener('change', e=>{
+      let val = parseInt(e.target.value);
+      if(val<1) val=1;
+      item.qty = val;
+      localStorage.setItem('cart', JSON.stringify(cart));
+    });
+    cartList.appendChild(div);
+  });
 }
 
-const qtyInputs = document.querySelectorAll('.qty');
-qtyInputs.forEach(input => {
-  input.addEventListener('input', e => {
-    const row = e.target.parentElement.parentElement;
-    updateTotal(row);
-  });
+// Checkout → Payment page (first product passed)
+document.getElementById('checkout').addEventListener('click', ()=>{
+  if(cart.length===0) return;
+  const first = cart[0];
+  const paymentUrl = `part5_payment.html?name=${encodeURIComponent(first.name)}&price=${first.price}&category=${encodeURIComponent(first.category||'')}`;
+  window.location.href = paymentUrl;
 });
 
-const removeButtons = document.querySelectorAll('.remove');
-removeButtons.forEach(btn => {
-  btn.addEventListener('click', e => {
-    e.target.parentElement.parentElement.remove();
-    alert('Item removed from cart!');
-  });
-});
-
-document.getElementById('checkout').addEventListener('click', () => {
-  alert('Proceeding to payment...');
-  window.location.href = 'part5_payment.html';
-});
+renderCart();
 </script>
 
 </body>
