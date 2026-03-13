@@ -3,61 +3,41 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Part 3 – Search Page</title>
-<link rel="stylesheet" href="style.css">
+<title>Meesho Clone - Search</title>
+<style>
+body { font-family: Arial, sans-serif; background:#f5f5f5; padding:20px; }
+h2 { margin-bottom:15px; }
+#search-container { max-width:500px; margin:auto; display:flex; flex-direction:column; gap:10px; }
+#search-container input { padding:8px; border-radius:5px; border:1px solid #ccc; width:100%; }
+.products { display:grid; grid-template-columns:repeat(auto-fill,minmax(180px,1fr)); gap:15px; margin-top:20px; }
+.product-card { background:white; padding:10px; border-radius:8px; box-shadow:0 2px 5px rgba(0,0,0,0.1); text-align:center; }
+.product-card img { width:100%; border-radius:5px; }
+</style>
 </head>
 <body>
+<h2>Search Products</h2>
+<div id="search-container">
+  <input type="text" id="search-input" placeholder="Search for products..." aria-label="Search for products">
+  <div class="products" id="product-list">
+    <div class="product-card"><img src="https://via.placeholder.com/150" alt="Product 1"><p>Product 1</p></div>
+    <div class="product-card"><img src="https://via.placeholder.com/150" alt="Product 2"><p>Product 2</p></div>
+    <div class="product-card"><img src="https://via.placeholder.com/150" alt="Product 3"><p>Product 3</p></div>
+    <div class="product-card"><img src="https://via.placeholder.com/150" alt="Product 4"><p>Product 4</p></div>
+    <div class="product-card"><img src="https://via.placeholder.com/150" alt="Product 5"><p>Product 5</p></div>
+  </div>
+</div>
 
-<header>
-  <h1>Shop Developer Mode – Search</h1>
-  <nav>
-    <a href="part1-home.html">Home</a>
-    <a href="part2-login.html">Login</a>
-  </nav>
-</header>
-
-<main>
-  <section aria-label="Search Products">
-    <h2>Search Products</h2>
-    <form id="searchForm">
-      <label for="searchInput">Enter product name:</label>
-      <input type="text" id="searchInput" name="searchInput" placeholder="Search..." required aria-required="true">
-      <button type="submit">Search</button>
-    </form>
-
-    <div id="searchResults" aria-live="polite">
-      <!-- Search results will appear here -->
-      <p>No results yet. Start typing to search products.</p>
-    </div>
-  </section>
-</main>
-
-<footer>
-  <p>&copy; 2026 Shop Developer Mode. All rights reserved.</p>
-</footer>
-
-<script src="script.js"></script>
 <script>
-  // Simple JS to simulate search
-  const searchForm = document.getElementById('searchForm');
-  const searchResults = document.getElementById('searchResults');
+const searchInput = document.getElementById('search-input');
+const products = Array.from(document.querySelectorAll('.product-card'));
 
-  searchForm.addEventListener('submit', function(e) {
-    e.preventDefault();
-    const query = document.getElementById('searchInput').value.trim();
-    if(query) {
-      searchResults.innerHTML = `
-        <h3>Results for "${query}"</h3>
-        <ul>
-          <li><a href="part4-product.html">Product 1</a></li>
-          <li><a href="part4-product.html">Product 2</a></li>
-        </ul>
-      `;
-    } else {
-      searchResults.innerHTML = <p>No results found.</p>;
-    }
+searchInput.addEventListener('input', () => {
+  const query = searchInput.value.toLowerCase();
+  products.forEach(product => {
+    const name = product.querySelector('p').innerText.toLowerCase();
+    product.style.display = name.includes(query) ? 'block' : 'none';
   });
+});
 </script>
-
 </body>
 </html>
