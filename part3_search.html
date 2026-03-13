@@ -3,41 +3,87 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Meesho Clone - Search</title>
+<title>Mini Meesho - Search</title>
 <style>
-body { font-family: Arial, sans-serif; background:#f5f5f5; padding:20px; }
-h2 { margin-bottom:15px; }
-#search-container { max-width:500px; margin:auto; display:flex; flex-direction:column; gap:10px; }
-#search-container input { padding:8px; border-radius:5px; border:1px solid #ccc; width:100%; }
-.products { display:grid; grid-template-columns:repeat(auto-fill,minmax(180px,1fr)); gap:15px; margin-top:20px; }
-.product-card { background:white; padding:10px; border-radius:8px; box-shadow:0 2px 5px rgba(0,0,0,0.1); text-align:center; }
-.product-card img { width:100%; border-radius:5px; }
+body { font-family: Arial, sans-serif; background:#f5f5f5; margin:0; padding:0; }
+nav { background: linear-gradient(135deg,#6a11cb,#2575fc); padding:10px; display:flex; justify-content:space-around; position:sticky; top:0; }
+nav a { color:white; text-decoration:none; font-weight:600; font-size:0.9rem; }
+h2 { text-align:center; margin:15px 0; }
+.search-container { text-align:center; margin:15px 0; }
+.search-container input { width:60%; padding:8px; border-radius:5px; border:1px solid #ccc; }
+.search-container button { padding:8px 12px; border:none; border-radius:5px; background: linear-gradient(135deg,#ff6a00,#ee0979); color:white; cursor:pointer; font-weight:600; }
+.products { display:grid; grid-template-columns:repeat(auto-fill,minmax(180px,1fr)); gap:15px; padding:20px; }
+.product-card { background:white; padding:10px; border-radius:8px; box-shadow:0 2px 5px rgba(0,0,0,0.1); display:flex; flex-direction:column; align-items:center; transition:transform 0.2s; cursor:pointer; }
+.product-card:hover { transform:scale(1.05); }
+.product-card img { width:100%; border-radius:8px; }
+.product-card button { margin-top:10px; padding:8px 10px; border:none; border-radius:5px; background: linear-gradient(135deg,#ff6a00,#ee0979); color:white; cursor:pointer; font-weight:600; }
 </style>
 </head>
 <body>
+
+<nav>
+  <a href="part1_index.html">Home</a>
+  <a href="part10_order_history.html">My Orders</a>
+  <a href="part8_wishlist.html">Wishlist</a>
+  <a href="part7_profile.html">Profile</a>
+</nav>
+
 <h2>Search Products</h2>
-<div id="search-container">
-  <input type="text" id="search-input" placeholder="Search for products..." aria-label="Search for products">
-  <div class="products" id="product-list">
-    <div class="product-card"><img src="https://via.placeholder.com/150" alt="Product 1"><p>Product 1</p></div>
-    <div class="product-card"><img src="https://via.placeholder.com/150" alt="Product 2"><p>Product 2</p></div>
-    <div class="product-card"><img src="https://via.placeholder.com/150" alt="Product 3"><p>Product 3</p></div>
-    <div class="product-card"><img src="https://via.placeholder.com/150" alt="Product 4"><p>Product 4</p></div>
-    <div class="product-card"><img src="https://via.placeholder.com/150" alt="Product 5"><p>Product 5</p></div>
-  </div>
+<div class="search-container">
+  <input type="text" id="search-input" placeholder="Search products by name">
+  <button id="search-btn">Search</button>
+</div>
+
+<div class="products" id="search-results">
+  <!-- Search results populated by JS -->
 </div>
 
 <script>
-const searchInput = document.getElementById('search-input');
-const products = Array.from(document.querySelectorAll('.product-card'));
+// Sample products array (same as Part1)
+const products = [
+  {name:"Product 1", price:499, category:"Clothing", img:"https://via.placeholder.com/150"},
+  {name:"Product 2", price:299, category:"Accessories", img:"https://via.placeholder.com/150"},
+  {name:"Product 3", price:399, category:"Footwear", img:"https://via.placeholder.com/150"},
+  {name:"Product 4", price:599, category:"Bags", img:"https://via.placeholder.com/150"},
+  {name:"Product 5", price:199, category:"Jewelry", img:"https://via.placeholder.com/150"}
+];
 
-searchInput.addEventListener('input', () => {
-  const query = searchInput.value.toLowerCase();
-  products.forEach(product => {
-    const name = product.querySelector('p').innerText.toLowerCase();
-    product.style.display = name.includes(query) ? 'block' : 'none';
+// Function to render products
+function renderProducts(list){
+  const container = document.getElementById('search-results');
+  container.innerHTML = '';
+  if(list.length === 0){
+    container.innerHTML = '<p style="text-align:center;">No products found.</p>';
+    return;
+  }
+  list.forEach(p=>{
+    const card = document.createElement('div');
+    card.className = 'product-card';
+    card.tabIndex = 0;
+    card.innerHTML = `
+      <img src="${p.img}" alt="${p.name}">
+      <p>${p.name}</p>
+      <p>₹${p.price}</p>
+      <button>Buy Now</button>
+    `;
+    card.querySelector('button').addEventListener('click',()=>{
+      const url = `part4_product.html?name=${encodeURIComponent(p.name)}&price=${p.price}&category=${encodeURIComponent(p.category)}`;
+      window.location.href = url;
+    });
+    container.appendChild(card);
   });
+}
+
+// Initial load: show all products
+renderProducts(products);
+
+// Search functionality
+document.getElementById('search-btn').addEventListener('click',()=>{
+  const query = document.getElementById('search-input').value.trim().toLowerCase();
+  const filtered = products.filter(p=>p.name.toLowerCase().includes(query));
+  renderProducts(filtered);
 });
 </script>
+
 </body>
 </html>
