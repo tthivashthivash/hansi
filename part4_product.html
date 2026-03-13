@@ -3,48 +3,34 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Part 4 – Product Details</title>
-<link rel="stylesheet" href="style.css">
+<title>Meesho Clone - Product</title>
+<style>
+body { font-family: Arial, sans-serif; background:#f5f5f5; padding:20px; }
+.product-container { max-width:600px; margin:auto; background:white; padding:20px; border-radius:10px; box-shadow:0 4px 8px rgba(0,0,0,0.1); }
+.product-container img { width:100%; border-radius:8px; }
+.product-container h2 { margin:15px 0 10px; }
+.product-container p { margin-bottom:10px; }
+button { padding:10px; border:none; border-radius:5px; background: linear-gradient(135deg,#ff6a00,#ee0979); color:white; cursor:pointer; }
+button:focus { outline:2px solid #000; }
+</style>
 </head>
 <body>
 
-<header>
-  <h1>Shop Developer Mode – Product Details</h1>
-  <nav>
-    <a href="part1-home.html">Home</a>
-    <a href="part3-search.html">Search</a>
-    <a href="part9-cart.html">Cart</a>
-  </nav>
-</header>
+<div class="product-container">
+  <img src="https://via.placeholder.com/400x300" alt="Product Image">
+  <h2>Product Name</h2>
+  <p>Category: Example Category</p>
+  <p>Price: ₹499</p>
+  <p>Description: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse vitae.</p>
+  <button id="add-to-cart">Add to Cart</button>
+</div>
 
-<main>
-  <section aria-label="Product Information">
-    <h2>Product Name: Super Widget</h2>
-    <img src="assets/images/product1.jpg" alt="Super Widget" width="300">
-    <p>Price: ₹1500</p>
-    <p>Description: This is a high-quality widget suitable for all your needs.</p>
+<script>
+const addToCartBtn = document.getElementById('add-to-cart');
+addToCartBtn.addEventListener('click', () => {
+  alert('Product added to cart!');
+});
+</script>
 
-    <form action="part9-cart.html" method="get">
-      <label for="quantity">Quantity:</label>
-      <input type="number" id="quantity" name="quantity" min="1" value="1" aria-required="true">
-
-      <button type="submit">Add to Cart</button>
-    </form>
-  </section>
-
-  <section aria-label="Related Products">
-    <h3>Related Products</h3>
-    <ul>
-      <li><a href="part4-product.html">Product 2</a></li>
-      <li><a href="part4-product.html">Product 3</a></li>
-    </ul>
-  </section>
-</main>
-
-<footer>
-  <p>&copy; 2026 Shop Developer Mode. All rights reserved.</p>
-</footer>
-
-<script src="script.js"></script>
 </body>
-</html>
+</html>>
