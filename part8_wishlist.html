@@ -3,48 +3,71 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Meesho Clone - Wishlist</title>
+<title>Mini Meesho - Wishlist</title>
 <style>
-body { font-family: Arial, sans-serif; background:#f5f5f5; padding:20px; }
-h2 { text-align:center; margin-bottom:20px; }
-.wishlist { display:grid; grid-template-columns:repeat(auto-fill,minmax(180px,1fr)); gap:15px; max-width:1000px; margin:auto; }
-.wishlist-card { background:white; padding:10px; border-radius:8px; box-shadow:0 2px 5px rgba(0,0,0,0.1); text-align:center; transition:transform 0.2s; }
+body { font-family: Arial, sans-serif; background:#f5f5f5; margin:0; padding:20px; }
+nav { background: linear-gradient(135deg,#6a11cb,#2575fc); padding:10px; display:flex; justify-content:space-around; position:sticky; top:0; }
+nav a { color:white; text-decoration:none; font-weight:600; font-size:0.9rem; }
+h2 { text-align:center; margin:15px 0; }
+.wishlist { display:grid; grid-template-columns:repeat(auto-fill,minmax(180px,1fr)); gap:15px; }
+.wishlist-card { background:white; padding:10px; border-radius:8px; box-shadow:0 2px 5px rgba(0,0,0,0.1); display:flex; flex-direction:column; align-items:center; transition:transform 0.2s; cursor:pointer; }
 .wishlist-card:hover { transform:scale(1.05); }
-.wishlist-card img { width:100%; border-radius:5px; }
-.wishlist-card button { margin-top:10px; padding:8px 10px; border:none; border-radius:5px; background: linear-gradient(135deg,#ff6a00,#ee0979); color:white; cursor:pointer; }
-.wishlist-card button:focus { outline:2px solid #000; }
+.wishlist-card img { width:100%; border-radius:8px; }
+.wishlist-card button { margin-top:10px; padding:8px 10px; border:none; border-radius:5px; background: linear-gradient(135deg,#ff6a00,#ee0979); color:white; cursor:pointer; font-weight:600; }
+.wishlist-card button.remove { background: linear-gradient(135deg,#757575,#333); margin-top:5px; }
 </style>
 </head>
 <body>
 
+<nav>
+  <a href="part1_index.html">Home</a>
+  <a href="part10_order_history.html">My Orders</a>
+  <a href="part8_wishlist.html">Wishlist</a>
+  <a href="part7_profile.html">Profile</a>
+</nav>
+
 <h2>My Wishlist</h2>
 <div class="wishlist" id="wishlist-list">
-  <div class="wishlist-card" tabindex="0">
-    <img src="https://via.placeholder.com/150" alt="Wishlist Product 1">
-    <p>Wishlist Product 1</p>
-    <button class="remove-btn">Remove</button>
-  </div>
-  <div class="wishlist-card" tabindex="0">
-    <img src="https://via.placeholder.com/150" alt="Wishlist Product 2">
-    <p>Wishlist Product 2</p>
-    <button class="remove-btn">Remove</button>
-  </div>
-  <div class="wishlist-card" tabindex="0">
-    <img src="https://via.placeholder.com/150" alt="Wishlist Product 3">
-    <p>Wishlist Product 3</p>
-    <button class="remove-btn">Remove</button>
-  </div>
+  <!-- Wishlist items -->
 </div>
 
 <script>
-const removeButtons = document.querySelectorAll('.remove-btn');
-removeButtons.forEach(btn => {
-  btn.addEventListener('click', e => {
-    const card = e.target.parentElement;
-    card.remove();
-    alert('Removed from wishlist!');
+// Get wishlist from localStorage
+let wishlist = JSON.parse(localStorage.getItem('wishlist')||'[]');
+const wishlistList = document.getElementById('wishlist-list');
+
+function renderWishlist(){
+  wishlistList.innerHTML = '';
+  if(wishlist.length === 0){
+    wishlistList.innerHTML = '<p style="text-align:center;">Your wishlist is empty.</p>';
+    return;
+  }
+  wishlist.forEach((p,i)=>{
+    const card = document.createElement('div');
+    card.className = 'wishlist-card';
+    card.tabIndex = 0;
+    card.innerHTML = `
+      <img src="${p.img}" alt="${p.name}">
+      <p>${p.name}</p>
+      <p>₹${p.price}</p>
+      <button class="buy">Buy Now</button>
+      <button class="remove">Remove</button>
+    `;
+    card.querySelector('.buy').addEventListener('click', ()=>{
+      const url = `part5_payment.html?name=${encodeURIComponent(p.name)}&price=${p.price}&category=${encodeURIComponent(p.category)}`;
+      window.location.href = url;
+    });
+    card.querySelector('.remove').addEventListener('click', ()=>{
+      wishlist.splice(i,1);
+      localStorage.setItem('wishlist', JSON.stringify(wishlist));
+      renderWishlist();
+    });
+    wishlistList.appendChild(card);
   });
-});
+}
+
+// Initial render
+renderWishlist();
 </script>
 
 </body>
